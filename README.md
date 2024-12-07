@@ -18,7 +18,9 @@ Plugin for folding sequences directly in PyMOL using EvolutionaryScale's ESM3 mo
 Once installed, navigate to `Plugin` > `PyMOLfold` in the menu bar.
 Then, in the dialog box, simply paste in your API key and amino acid sequence you wish to fold.
 
-## Future Features
+## Feature Roadmap
 
-- [ ] Add support for multiple chains (or FASTA input format).
-- [ ] Add dropdown to select different ESM models.
+- [X] Basic folding with `esm3-small-2024-08`
+- [ ] UI controls for temperature and steps.
+- [ ] Support for multiple chains (or FASTA input format).
+- [ ] UI Dropdown to select different ESM models.
