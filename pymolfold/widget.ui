@@ -2,13 +2,22 @@
 <ui version="4.0">
  <class>Form</class>
  <widget class="QWidget" name="Form">
+  <property name="windowModality">
+   <enum>Qt::NonModal</enum>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
     <width>450</width>
-    <height>400</height>
+    <height>350</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
   </property>
   <property name="windowTitle">
    <string notr="true">PyMOLfold Plugin</string>
@@ -17,28 +26,31 @@
    <item>
     <widget class="QLabel" name="label">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+      <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
      <property name="minimumSize">
       <size>
-       <width>280</width>
-       <height>60</height>
+       <width>150</width>
+       <height>50</height>
       </size>
      </property>
+     <property name="autoFillBackground">
+      <bool>false</bool>
+     </property>
      <property name="styleSheet">
-      <string notr="true">background-color: #000;color:white; padding: 20px</string>
+      <string notr="true">background-color: #000;color:white; padding: 10px</string>
      </property>
      <property name="text">
-      <string notr="true">PyMOLfold Plugin
-Created by: Tuple, LLC (https://tuple.xyz)
-Powered by: EvolutionaryScale's ESM3 (https://evolutionaryscale.com)
-      </string>
+      <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#ffffff;&quot;&gt;PyMOLfold Plugin&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:9pt; color:#ffffff;&quot;&gt;Created by: Colby T. Ford, Ph.D.&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:9pt; color:#ffffff;&quot;&gt;Contribute: &lt;/span&gt;&lt;a href=&quot;https://github.com/colbyford&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#ffffff;&quot;&gt;https://github.com/colbyford&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
      <property name="textFormat">
-      <enum>Qt::PlainText</enum>
+      <enum>Qt::RichText</enum>
+     </property>
+     <property name="scaledContents">
+      <bool>false</bool>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
@@ -46,35 +58,138 @@ Powered by: EvolutionaryScale's ESM3 (https://evolutionaryscale.com)
      <property name="wordWrap">
       <bool>true</bool>
      </property>
+     <property name="openExternalLinks">
+      <bool>true</bool>
+     </property>
     </widget>
    </item>
    <item>
     <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0">
-      <widget class="QLabel" name="label_token">
-       <property name="text">
-        <string notr="true">ESM Foundry Token</string>
+     <item row="0" column="1">
+      <widget class="QListWidget" name="input_list_models">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>100</height>
+        </size>
+       </property>
+       <property name="mouseTracking">
+        <bool>false</bool>
+       </property>
+       <property name="acceptDrops">
+        <bool>false</bool>
+       </property>
+       <property name="sizeAdjustPolicy">
+        <enum>QAbstractScrollArea::AdjustToContentsOnFirstShow</enum>
+       </property>
+       <property name="autoScrollMargin">
+        <number>16</number>
+       </property>
+       <property name="alternatingRowColors">
+        <bool>false</bool>
+       </property>
+       <property name="resizeMode">
+        <enum>QListView::Fixed</enum>
+       </property>
+       <property name="viewMode">
+        <enum>QListView::ListMode</enum>
+       </property>
+       <property name="currentRow">
+        <number>-1</number>
+       </property>
+       <item>
+        <property name="text">
+         <string>esm3-small-2024-08</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>esm3-open-2024-03</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>esm3-medium-2024-08</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>esm3-large-2024-03</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>esm3-medium-multimer-2024-09</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>boltz-1</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>chai-1</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QPlainTextEdit" name="input_aa_seq">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="sizeAdjustPolicy">
+        <enum>QAbstractScrollArea::AdjustToContents</enum>
+       </property>
+       <property name="plainText">
+        <string>FVNQHLCGSHLVEALYLVCGERGFFYTPKTRREAEDLQGSLQPLALEGSLQKRGIVEQCCTSICSLYQLENYCN</string>
+       </property>
+       <property name="backgroundVisible">
+        <bool>false</bool>
        </property>
       </widget>
      </item>
-     <item row="0" column="1" colspan="2">
-      <widget class="QLineEdit" name="input_token">
-       <property name="text">
-        <string>PQZTYWyur8fur6koyJ3Jb</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="0">
+     <item row="2" column="0">
       <widget class="QLabel" name="label_aa_seq">
        <property name="text">
         <string notr="true">Amino Acid Sequence</string>
        </property>
       </widget>
      </item>
-     <item row="1" column="1" colspan="2">
-      <widget class="QLineEdit" name="input_aa_seq">
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_model">
        <property name="text">
-        <string>FVNQHLCGSHLVEALYLVCGERGFFYTPKTRREAEDLQGSLQPLALEGSLQKRGIVEQCCTSICSLYQLENYCN</string>
+        <string notr="true">Model Name</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="label_token">
+       <property name="text">
+        <string notr="true">Token (for ESM models)</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1" colspan="2">
+      <widget class="QLineEdit" name="input_token">
+       <property name="text">
+        <string>2JGcG8rXj1Ff2FKyQwf5mK</string>
+       </property>
+       <property name="echoMode">
+        <enum>QLineEdit::PasswordEchoOnEdit</enum>
+       </property>
+       <property name="clearButtonEnabled">
+        <bool>true</bool>
        </property>
       </widget>
      </item>
@@ -86,6 +201,15 @@ Powered by: EvolutionaryScale's ESM3 (https://evolutionaryscale.com)
       <widget class="QPushButton" name="button_fold">
        <property name="text">
         <string notr="true">Fold</string>
+       </property>
+       <property name="autoDefault">
+        <bool>false</bool>
+       </property>
+       <property name="default">
+        <bool>false</bool>
+       </property>
+       <property name="flat">
+        <bool>false</bool>
        </property>
       </widget>
      </item>
