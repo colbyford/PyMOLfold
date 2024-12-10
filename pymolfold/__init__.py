@@ -164,6 +164,7 @@ def make_dialog():
             "esm3-open-2024-03",
             "esm3-medium-2024-08",
             "esm3-large-2024-03",
+            "esm3-medium-multimer-2024-09",
             "boltz-1",
             "chai-1"
         ]

@@ -101,7 +101,7 @@
         <enum>QListView::ListMode</enum>
        </property>
        <property name="currentRow">
-        <number>0</number>
+        <number>-1</number>
        </property>
        <item>
         <property name="text">
@@ -121,6 +121,11 @@
        <item>
         <property name="text">
          <string>esm3-large-2024-03</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>esm3-medium-multimer-2024-09</string>
         </property>
        </item>
        <item>
