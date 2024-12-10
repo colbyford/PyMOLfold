@@ -79,10 +79,7 @@ def fold_chai(aa_sequence):
     from chai_lab.chai1 import run_inference
     import torch
 
-    fasta_line = f"""
->aa_sequence
-{aa_sequence}
-"""
+    fasta_line = f">aa_sequence\n{aa_sequence}"
 
     ## Create temp fasta file
     with tempfile.NamedTemporaryFile(delete=False, suffix=".fasta") as temp_fasta:
@@ -116,10 +113,7 @@ def fold_boltz(aa_sequence):
     """
     Protein folding using Boltz-1 model
     """
-    fasta_line = f"""
->aa_sequence
-{aa_sequence}
-"""
+    fasta_line = f">A|protein|empty\n{aa_sequence}"
 
     ## Create temp fasta file
     with tempfile.NamedTemporaryFile(delete=False, suffix=".fasta") as temp_fasta:
@@ -131,13 +125,15 @@ def fold_boltz(aa_sequence):
     output_dir = tempfile.mkdtemp()
 
     ## Run Inferencing
-    boltz_run = os.system(f"boltz predict {temp_fasta_path} --out_dir {output_dir} --output_format pdb")
+    import torch
+    accelerator = torch.device("gpu" if torch.cuda.is_available() else "cpu")
+    boltz_run = os.system(f"boltz predict {temp_fasta_path} --out_dir {output_dir} --output_format pdb --use_msa_server --accelerator {accelerator}")
 
     if boltz_run != 0:
         raise Exception("Error running Boltz Model.")
     
     ## Get the path to the folded PDB file
-    folded_pdb_path = os.path.join(output_dir, temp_fasta_filename, f"{temp_fasta_filename}_model_0.pdb")
+    folded_pdb_path = os.path.join(output_dir, f"boltz_results_{temp_fasta_filename}", "predictions", temp_fasta_filename, f"{temp_fasta_filename}_model_0.pdb")
 
     return folded_pdb_path
 
