@@ -38,8 +38,11 @@ def fold_esm(model_name, aa_sequence, token):
     """
     Protein folding using ESM models
     """
-    from esm.sdk import client
-    from esm.sdk.api import ESMProtein, GenerationConfig
+    try:
+        from esm.sdk import client
+        from esm.sdk.api import ESMProtein, GenerationConfig
+    except ModuleNotFoundError as e:
+        raise Exception(f"esm module not found: {str(e)}")
 
     try:
         model = client(model=model_name, url="https://forge.evolutionaryscale.ai", token=token)
@@ -76,7 +79,11 @@ def fold_chai(aa_sequence):
     """
     Protein folding using Chai models
     """
-    from chai_lab.chai1 import run_inference
+    try:
+        from chai_lab.chai1 import run_inference
+    except ModuleNotFoundError as e:
+        raise Exception(f"chai_lab module not found: {str(e)}")
+    
     import torch
 
     fasta_line = f">aa_sequence\n{aa_sequence}"
@@ -113,6 +120,11 @@ def fold_boltz(aa_sequence):
     """
     Protein folding using Boltz-1 model
     """
+    try:
+        import boltz
+    except ModuleNotFoundError as e:
+        raise Exception(f"boltz module not found: {str(e)}")
+
     fasta_line = f">A|protein|empty\n{aa_sequence}"
 
     ## Create temp fasta file
@@ -130,7 +142,7 @@ def fold_boltz(aa_sequence):
     boltz_run = os.system(f"boltz predict {temp_fasta_path} --out_dir {output_dir} --output_format pdb --use_msa_server --accelerator {accelerator}")
 
     if boltz_run != 0:
-        raise Exception("Error running Boltz Model.")
+        raise Exception("Error running Boltz model. Is `boltz` in your PATH?")
     
     ## Get the path to the folded PDB file
     folded_pdb_path = os.path.join(output_dir, f"boltz_results_{temp_fasta_filename}", "predictions", temp_fasta_filename, f"{temp_fasta_filename}_model_0.pdb")
