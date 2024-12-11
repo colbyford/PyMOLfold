@@ -1,9 +1,9 @@
 # PyMOLfold
 Plugin for folding sequences directly in PyMOL using EvolutionaryScale's ESM3 model.
 
-<h3 align="right">Colby T. Ford, Ph.D. | Tuple, LLC</h3>
+<h3 align="right">Colby T. Ford, Ph.D.</h3>
 
-![Plugin Screenshot](screenshot.png)
+![Plugin Screenshot](img/screenshot_v0.1.0.png)
 
 ## Plugin Installation
 
@@ -37,6 +37,8 @@ Then, to run a command in your normal terminal, simply point to the PyMOL Python
 Here are the example install commands for the supported models:
 
 - ESM3: `pip install esm`
+- Boltz-1: `pip install boltz`
+- Chai-1: `pip install chai_lab==0.5.0`
 
 > [!NOTE]
 > Note: To use an ESM3 model, you'll need an API key from [Evolutionary Scale Forge](https://forge.evolutionaryscale.ai/). Otherwise, the plugin can't download the folding model.
@@ -44,7 +46,9 @@ Here are the example install commands for the supported models:
 
 ## Feature Roadmap
 
-- [X] Basic folding with `esm3-small-2024-08`
+- [X] Basic folding with `esm3-small-2024-08`.
+- [X] Support for the latest ESM3 models.
+- [ ] Addiional model support for Boltz-1 and Chai-1 (in beta)
 - [ ] UI controls for temperature and steps.
 - [ ] Support for multiple chains (or FASTA input format).
 - [ ] UI Dropdown to select different models.
