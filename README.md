@@ -1,5 +1,5 @@
 # PyMOLfold
-Plugin for folding sequences directly in PyMOL using EvolutionaryScale's ESM3 model.
+Plugin for folding sequences directly in PyMOL using various models (ESM3, Boltz-1, and Chai-1).
 
 <h3 align="right">Colby T. Ford, Ph.D.</h3>
 
@@ -7,21 +7,36 @@ Plugin for folding sequences directly in PyMOL using EvolutionaryScale's ESM3 mo
 
 ## Plugin Installation
 
-1. Download the [pymolfold.zip](pymolfold.zip) file from this repository.
-2. Open PyMOL and in the menu bar, go to `Plugin` > `Plugin Manager`.
-3. On the `Install New Plugin` tab, click the `Choose file...` button under "Install from local file".
+### From Local Download
+1. Download the *pymolfold.zip* file from this repository.
+    - Latest package: [pymolfold.zip](pymolfold.zip)
+    - Stable release: [pymolfold_v0.1.0.zip](https://github.com/colbyford/PyMOLfold/releases/download/v0.1.0/pymolfold_v0.1.0.zip)
+2. Open PyMOL and in the menu bar, go to *Plugin* > *Plugin Manager*.
+3. On the *Install New Plugin* tab, click the *Choose file...* button under "Install from local file".
 4. Locate the .zip file and open it.
 
-Once installed, navigate to `Plugin` > `PyMOLfold` in the menu bar.
+### From the Web
+
+1. Open PyMOL and in the menu bar, go to *Plugin* > *Plugin Manager*.
+
+2. On the *Install New Plugin* tab, under the *Install from PyuMOLWiki or any URL* section,  paste in the URL of the release .zip file from GitHub.
+    - `https://github.com/colbyford/PyMOLfold/releases/download/v0.1.0/pymolfold_v0.1.0.zip`
+![Installation](img/install.png)
+
+3. Click the *Fetch* button and follow the prompts to install the package.
+
+
+
+Once installed, navigate to *Plugin* > *PyMOLfold* in the menu bar.
 Then, in the dialog box, simply paste in your API key and amino acid sequence you wish to fold.
 
 > [!NOTE]
-> Note: This plugin does not include any of the model package(s). You'll need to install them into the PyMOL conda environment.
+> Note: This plugin does not include any of the model package(s) or weights. You'll need to install them into the PyMOL conda environment.
 
 
 ## Package Installation
 
-You can install PyPI libraries from the PyMOL command line. However, you can run the pip install commands from your normal terminal, if you know the path to PyMOL's Python executable. To find it, use the `sys` library as follows:
+You can install PyPI libraries from the PyMOL command line. You can also run the `pip` install commands from your normal terminal if you know the path to PyMOL's Python executable. Running from the terminal is a bit easier to troubleshoot any installation issues. To find the PyMOL Python executable, use the `sys` library as follows:
 
 ```python
 PyMOL>import sys
@@ -48,7 +63,7 @@ Here are the example install commands for the supported models:
 
 - [X] Basic folding with `esm3-small-2024-08`.
 - [X] Support for the latest ESM3 models.
-- [ ] Addiional model support for Boltz-1 and Chai-1 (in beta)
+- [ ] Additional model support for Boltz-1 and Chai-1 (in beta)
 - [ ] UI controls for temperature and steps.
 - [ ] Support for multiple chains (or FASTA input format).
-- [ ] UI Dropdown to select different models.
+- [X] UI to select different models.
