@@ -63,7 +63,9 @@ Here are the example install commands for the supported models:
 
 - [X] Basic folding with `esm3-small-2024-08`.
 - [X] Support for the latest ESM3 models.
-- [ ] Additional model support for Boltz-1 and Chai-1 (in beta)
-- [ ] UI controls for temperature and steps.
+- [X] Model support for Boltz-1 (+ ligands)
+    - Thanks to @ullahsamee for this enhancement!
+- [ ] Model support and Chai-1 (in beta)
+- [X] UI controls for temperature and steps.
 - [ ] Support for multiple chains (or FASTA input format).
 - [X] UI to select different models.
