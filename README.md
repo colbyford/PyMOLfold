@@ -36,18 +36,20 @@ Then, in the dialog box, simply paste in your API key and amino acid sequence yo
 
 ## Package Installation
 
-You can install PyPI libraries from the PyMOL command line. You can also run the `pip` install commands from your normal terminal if you know the path to PyMOL's Python executable. Running from the terminal is a bit easier to troubleshoot any installation issues. To find the PyMOL Python executable, use the `sys` library as follows:
+You can install PyPI libraries from the PyMOL command line. You can also run the `pip` install commands from your normal terminal if you know the path to PyMOL's Python executable. Running from the terminal is a bit easier to troubleshoot any installation issues. To find the PyMOL Python executable, use the `sys` library as follows. 
+Simply copy and paste these commands in the pymol command line interface terminal:
 
 ```python
-PyMOL>import sys
-PyMOL>print(sys.executable)
-/Applications/PyMOL.app/Contents/bin/python
+import sys
+print(sys.executable)
 ```
+output would be something similar like: /home/ullah/biotools/pymol/bin/python
 Then, to run a command in your normal terminal, simply point to the PyMOL Python executable. For example:
 
 ```bash
-/Applications/PyMOL.app/Contents/bin/python -m pip install <package_name>
+/home/ullah/biotools/pymol/bin/python -m pip install <package_name>
 ```
+If you get any error in pip command installations, then try again by removing -m
 
 Here are the example install commands for the supported models:
 
