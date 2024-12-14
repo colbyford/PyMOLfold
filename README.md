@@ -43,11 +43,11 @@ Simply copy and paste these commands in the pymol command line interface termina
 import sys
 print(sys.executable)
 ```
-output would be something similar like: /home/ullah/biotools/pymol/bin/python
+The output should be something like `/home/<username>/biotools/pymol/bin/python` on Linux or `/Applications/PyMOL.app/Contents/bin/python` on macOS.
 Then, to run a command in your normal terminal, simply point to the PyMOL Python executable. For example:
 
 ```bash
-/home/ullah/biotools/pymol/bin/python -m pip install <package_name>
+/home/<username>/biotools/pymol/bin/python -m pip install <package_name>
 ```
 If you get any error in pip command installations, then try again by removing -m
 
@@ -64,10 +64,16 @@ Here are the example install commands for the supported models:
 ## Feature Roadmap
 
 - [X] Basic folding with `esm3-small-2024-08`.
+    - In beta release. (Credit: @colbyford)
 - [X] Support for the latest ESM3 models.
-- [X] Model support for Boltz-1 (+ ligands)
-    - Thanks to @ullahsamee for this enhancement!
-- [X] Model support for Chai-1 (now works for protein and protein-ligand complex)
-- [X] UI controls for temperature and steps.
-- [ ] Support for multiple chains (or FASTA input format).
+    - In v0.1.0 release. (Credit: @colbyford)
 - [X] UI to select different models.
+    - In v0.1.0 release (Credit: @colbyford)
+- [X] Model support for Boltz-1 (+ ligands)
+    - In v0.2.0 release (Credit: @ullahsamee)
+- [X] UI controls for temperature and steps.
+    - In v0.2.0 release (Credit @colbyford)
+- [X] Model support for Chai-1 (proteins and protein-ligand complexes)
+    - In v0.2.5 release (Credit: @ullahsamee)
+- [ ] Support for multiple chains (or FASTA input format).
+
