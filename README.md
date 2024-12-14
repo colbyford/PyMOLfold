@@ -67,7 +67,7 @@ Here are the example install commands for the supported models:
 - [X] Support for the latest ESM3 models.
 - [X] Model support for Boltz-1 (+ ligands)
     - Thanks to @ullahsamee for this enhancement!
-- [ ] Model support and Chai-1 (in beta)
+- [X] Model support for Chai-1 (now works for protein and protein-ligand complex)
 - [X] UI controls for temperature and steps.
 - [ ] Support for multiple chains (or FASTA input format).
 - [X] UI to select different models.
