@@ -56,23 +56,44 @@ Here are the example install commands for the supported models:
 - ESM3: `pip install esm`
 - Boltz-1: `pip install boltz`
 - Chai-1: `pip install chai_lab==0.5.0`
+- Protenix: `pip install --extra-index-url=https://pypi.nvidia.com --trusted-host pypi.nvidia.com nvidia-cublas-cu12 deepspeed==0.14.4 protenix`
 
 > [!NOTE]
 > Note: To use an ESM3 model, you'll need an API key from [Evolutionary Scale Forge](https://forge.evolutionaryscale.ai/). Otherwise, the plugin can't download the folding model.
 
+## Using Conda
+The version of PyMOL that can be downloaded from the [Schrödinger website](https://pymol.org/) is currently compiled with Python 3.10. On some operating systems, you may have some difficulties installing the various model packages with this Python version.
+
+To get around this, we can use [conda](https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html) to get PyMOL with a different version of Python that will *hopefully* work with your desired folding library. You can modify the provided [environment.yml](environment.yml) file to install the desired Python version + model package. (Note: You likely cannot install all of the model libraries at the same time as they have dependency conflicts.)
+
+```bash
+conda env create --file environment.yml
+## Go get a ☕️ as this will take a while.
+
+conda activate pymolfold
+pymol ## This will open the GUI
+
+# conda deactivate
+# conda env update --file environment.yml
+# conda remove -n pymolfold --all
+```
 
 ## Feature Roadmap
 
-- [X] Basic folding with `esm3-small-2024-08`.
-    - In beta release. (Credit: @colbyford)
-- [X] Support for the latest ESM3 models.
-    - In v0.1.0 release. (Credit: @colbyford)
-- [X] UI to select different models.
-    - In v0.1.0 release (Credit: @colbyford)
-- [X] Model support for Boltz-1 (+ ligands)
-    - In v0.2.0 release (Credit: @ullahsamee)
-- [X] UI controls for temperature and steps.
-    - In v0.2.0 release (Credit @colbyford)
+- [ ] UI updates for model-specific controls
+- [ ] Support for multiple protein chains.
+- [X] Model support for Protenix model (in beta)
+    - In v0.3.0 release (Credit @colbyford)
 - [X] Model support for Chai-1 (proteins and protein-ligand complexes)
     - In v0.2.5 release (Credit: @ullahsamee)
-- [ ] Support for multiple chains (or FASTA input format).
+- [X] UI controls for temperature, steps, etc.
+    - In v0.2.0 release (Credit @colbyford)
+- [X] Model support for Boltz-1 (+ ligands)
+    - In v0.2.0 release (Credit: @ullahsamee)
+- [X] UI to select different models.
+    - In v0.1.0 release (Credit: @colbyford)
+- [X] Support for the latest ESM3 models.
+    - In v0.1.0 release. (Credit: @colbyford)
+- [X] Basic folding with `esm3-small-2024-08`.
+    - In initial release. (Credit: @colbyford)
+
