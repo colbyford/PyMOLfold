@@ -3,7 +3,7 @@ Plugin for folding sequences directly in PyMOL using various models (ESM3, Boltz
 
 <h3 align="right">Colby T. Ford, Ph.D.</h3>
 
-![Plugin Screenshot](img/screenshot_v0.1.0.png)
+![Plugin Demo](img/recording_v0.1.0.gif)
 
 ## Plugin Installation
 
