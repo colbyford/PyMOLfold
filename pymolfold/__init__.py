@@ -1,13 +1,13 @@
 '''
 PyMOL Protein Folding Plugin
 
-(c) Tuple, LLC by Colby T. Ford, Ph.D.
+By Colby T. Ford, Ph.D.
 License: GPLv3
 '''
 
 from __future__ import absolute_import
 from __future__ import print_function
-import os, tempfile, random, string
+import os, tempfile, random, string, sys, subprocess, json
 
 def __init_plugin__(app=None):
     '''
@@ -34,7 +34,7 @@ def run_plugin_gui():
 ## Folding Functions
 
 ## ESM Folding
-def fold_esm(model_name, aa_sequence, temperature=0.7, num_steps=8, token=""):
+def fold_esm(model_name:str, aa_sequence:str, temperature:float=0.7, num_steps:int=8, token:str=""):
     """
     Protein folding using ESM models
     """
@@ -75,22 +75,26 @@ def fold_esm(model_name, aa_sequence, temperature=0.7, num_steps=8, token=""):
     return temp_pdb_path
 
 ## Chai Folding
-def fold_chai(aa_sequence, num_trunk_recycles=3, num_diffn_timesteps=200, seed=1337):
+def fold_chai(aa_sequence:str, ligand:str=None, ligand_type:str="smiles", num_trunk_recycles:int=3, num_diffn_timesteps:int=200, seed:int=1337):
     """
     Protein folding using Chai models
     """
     try:
         from chai_lab.chai1 import run_inference
+        import torch
     except ModuleNotFoundError as e:
         raise Exception(f"chai_lab module not found: {str(e)}")
     
-    import torch
-
-    fasta_line = f">aa_sequence\n{aa_sequence}"
+    ## Start building FASTA content
+    fasta_content = f">A|protein|name=chain_A\n{aa_sequence}\n"
+    
+    ## Add ligand if provided
+    if ligand and ligand_type:
+        fasta_content += f">ligand|name=chain_B\n{ligand}\n"
 
     ## Create temp fasta file
     with tempfile.NamedTemporaryFile(delete=False, suffix=".fasta") as temp_fasta:
-        temp_fasta.write(fasta_line.encode())
+        temp_fasta.write(fasta_content.encode())
         temp_fasta_path = temp_fasta.name
 
     ## Create temp output directory
@@ -110,32 +114,28 @@ def fold_chai(aa_sequence, num_trunk_recycles=3, num_diffn_timesteps=200, seed=1
         use_esm_embeddings=True
     )
 
-    cif_paths = candidates.cif_paths
+    if not candidates.cif_paths:
+        raise ValueError("No structure files were generated")
 
-    return cif_paths[0]
+    return candidates.cif_paths[0]
 
 ## Boltz Folding
-def fold_boltz(aa_sequence, ligand=None, ligand_type=None, use_msa_server=False, recycling_steps=3, sampling_steps=200):
+def fold_boltz(aa_sequence:str, ligand:str=None, ligand_type:str=None, use_msa_server:bool=False, recycling_steps:int=3, sampling_steps:int=200):
     """
     Protein folding using Boltz-1 model
     """
     try:
         import boltz
         import torch
-        import subprocess
-        import sys
     except ModuleNotFoundError as e:
-        raise Exception(f"Required module not found: {str(e)}")
+        raise Exception(f"Could not import required module: {str(e)}")
 
     ## Start building FASTA content
     fasta_content = f">A|protein|empty\n{aa_sequence}\n"
     
     ## Add ligand if provided
     if ligand and ligand_type:
-        if ligand_type == "ccd":
-            fasta_content += f">B|ccd|\n{ligand}\n"
-        elif ligand_type == "smiles":
-            fasta_content += f">B|smiles|\n{ligand}\n"
+        fasta_content += f">B|{ligand_type}|\n{ligand}\n"
 
     ## Create temp fasta file
     with tempfile.NamedTemporaryFile(delete=False, suffix=".fasta") as temp_fasta:
@@ -150,44 +150,106 @@ def fold_boltz(aa_sequence, ligand=None, ligand_type=None, use_msa_server=False,
     device = "gpu" if torch.cuda.is_available() else "cpu"
     
     try:
-        ## Get the path to boltz executable
-        boltz_cmd = os.path.join(os.path.dirname(sys.executable), 'boltz')
-        
         ## Run boltz command
         cmd = [
-            boltz_cmd,
+            "boltz",
             "predict",
             temp_fasta_path,
             "--out_dir", output_dir,
             "--accelerator", device,
             "--output_format", "pdb",
-            "--use_msa_server" if use_msa_server else "",
-            "--recycling_steps", recycling_steps,
-            "--sampling_steps", sampling_steps
+            "--recycling_steps", str(recycling_steps),
+            "--sampling_steps", str(sampling_steps)
         ]
+
+        print("Running Boltz with command:", " ".join(cmd))
+
+        if use_msa_server:
+            cmd.append("--use_msa_server")
         
-        result = subprocess.run(cmd, capture_output=True, text=True)
-        
-        if result.returncode != 0:
-            raise Exception(f"Boltz prediction failed: {result.stderr}")
-            
+        result = subprocess.run(cmd, capture_output=True, text=True, check=True)
+
     except Exception as e:
         raise Exception(f"Error during structure prediction: {str(e)}")
     
     ## Get the path to the folded PDB file
-    folded_pdb_path = os.path.join(output_dir, f"boltz_results_{temp_fasta_filename}", "predictions", temp_fasta_filename, f"{temp_fasta_filename}_model_0.pdb")
+    folded_pdb_path = os.path.join(output_dir,
+                        f"bolts_results_{temp_fasta_filename}",
+                        "predictions",
+                        temp_fasta_filename,
+                        f"{temp_fasta_filename}_model_0.pdb")
     
     if not os.path.exists(folded_pdb_path):
         raise Exception(f"Expected output file not found: {folded_pdb_path}")
     
-    ## Clean up temporary files
-    try:
-        os.remove(temp_fasta_path)
-    except:
-        pass
-        
     return folded_pdb_path
 
+def fold_protenix(aa_sequence:str, ligand:str=None, use_msa_server:bool=False, seed:int=1337):
+    """
+    Protein folding using Protenix model
+    """
+    try:
+        import protenix
+        import torch
+    except ModuleNotFoundError as e:
+        raise Exception(f"Could not import required module: {str(e)}")
+    
+    ## Build the JSON body
+    json_content = [{"sequences": [
+            {"proteinChain": {
+                "sequence": aa_sequence,
+                "count": 1
+                }
+            }
+        ],
+        "name": "pymolfold"
+        }]
+    
+    ## If ligand provided, add it to the JSON
+    if ligand:
+        ligand_dict = {
+            "ligand": {
+                "ligand": ligand,
+                "count": 1
+            }
+        }
+    json_content[0]["sequences"].append(ligand_dict)
+
+    ## Create temp json file
+    with tempfile.NamedTemporaryFile(delete=False, suffix=".json") as temp_json:
+        temp_json.write(json.dumps(json_content).encode())
+        temp_json_path = temp_json.name
+
+    ## Create temp output directory
+    output_dir = tempfile.mkdtemp()
+        
+    try:
+        ## Run protenix command
+        cmd = [
+            "protenix",
+            "predict",
+            "--input", temp_json_path,
+            "--out_dir", output_dir,
+            "--seeds", str(seed)
+        ]
+        if use_msa_server:
+            cmd.append("--use_msa_server")
+
+        result = subprocess.run(cmd, capture_output=True, text=True, check=True)
+
+    except Exception as e:
+        raise Exception(f"Error during structure prediction: {str(e)}")
+
+    ## Get the path to the folded CIF file
+    folded_cif_path = os.path.join(output_dir,
+                                   "pymolfold",
+                                   str(seed),
+                                   "pymolfold_1337_sample_0.cif")
+    
+    if not os.path.exists(folded_cif_path):
+        raise Exception(f"Expected output file not found: {folded_cif_path}")
+    
+    return folded_cif_path
 
 def apply_alphafold_colors(object_name):
     """
@@ -229,30 +291,13 @@ def make_dialog():
     ## Callback for the "Fold" button
     def run():
 
-        ## Get form data
-        # model_name = models[form.input_list_models.currentRow()]
+        ## Get basic form data
         model_name = form.input_list_models.currentText()
         aa_sequence = form.input_aa_seq.toPlainText()
-
-        ## General Settings
+        ligand_sequence = form.input_ligand.toPlainText().strip()
+        ligand_type = form.input_ligand_type.currentText() if ligand_sequence else None
+        seed = int(form.input_seed.text())
         af_coloring = form.input_af_coloring.isChecked()
-
-        ## ESM Parameters
-        esm_token = form.input_esm_token.text()
-        esm_temp = float(form.input_esm_temp.text())
-        esm_nsteps = int(form.input_esm_nsteps.text())
-        
-        ## Boltz Parameters (ligand)
-        boltz_ligand = form.input_boltz_ligand.toPlainText().strip()
-        boltz_ligand_type = form.input_boltz_ligand_type.currentText() if boltz_ligand else None
-        boltz_recycling_steps = int(form.input_boltz_recycling_steps.text())
-        boltz_sampling_steps = int(form.input_boltz_sampling_steps.text())
-        boltz_use_msa_server = form.input_boltz_use_msa_server.isChecked()
-
-        ## Chai Parameters
-        chai_recycling_steps = int(form.input_chai_recycling_steps.text())
-        chai_diffusion_steps = int(form.input_chai_diffusion_steps.text())
-        chai_seed = int(form.input_chai_seed.text())
 
         if not aa_sequence:
             QtWidgets.QMessageBox.warning(form, "Error", "Please enter a valid amino acid sequence.")
@@ -260,23 +305,52 @@ def make_dialog():
 
         try:
             if model_name.startswith("esm3"):
+                ## ESM Parameters
+                esm_token = form.input_esm_token.text()
+                esm_temp = float(form.input_esm_temp.text())
+                esm_nsteps = int(form.input_esm_nsteps.text())
+
                 folded_pdb_path = fold_esm(model_name,
                                            aa_sequence,
                                            temperature=esm_temp,
                                            num_steps=esm_nsteps,
                                            token=esm_token)
-            elif model_name == "chai-1":
-                folded_pdb_path = fold_chai(aa_sequence,
-                                            num_trunk_recycles=chai_recycling_steps,
-                                            num_diffn_timesteps=chai_diffusion_steps,
-                                            seed=chai_seed)
+                
             elif model_name == "boltz-1":
+                ## Boltz Parameters
+                boltz_recycling_steps = int(form.input_boltz_recycling_steps.text())
+                boltz_sampling_steps = int(form.input_boltz_sampling_steps.text())
+                boltz_use_msa_server = form.input_boltz_use_msa_server.isChecked()
+
                 folded_pdb_path = fold_boltz(aa_sequence,
-                                             ligand=boltz_ligand,
-                                             ligand_type=boltz_ligand_type,
+                                             ligand=ligand_sequence,
+                                             ligand_type=ligand_type,
                                              use_msa_server=boltz_use_msa_server,
                                              recycling_steps=boltz_recycling_steps,
                                              sampling_steps=boltz_sampling_steps)
+                
+            elif model_name == "chai-1":
+                ## Chai Parameters
+                chai_recycling_steps = int(form.input_chai_recycling_steps.text())
+                chai_diffusion_steps = int(form.input_chai_diffusion_steps.text())
+
+                folded_pdb_path = fold_chai(aa_sequence,
+                                            ligand=ligand_sequence,
+                                            ligand_type=ligand_type,
+                                            num_trunk_recycles=chai_recycling_steps,
+                                            num_diffn_timesteps=chai_diffusion_steps,
+                                            seed=seed)
+            
+            elif model_name == "protenix":
+                ## Protenix Parameters
+                protenix_use_msa = form.input_protenix_use_msa.isChecked()
+
+                folded_pdb_path = fold_protenix(aa_sequence,
+                                                ligand=ligand_sequence,
+                                                ligand_type=ligand_type,
+                                                use_msa_server=protenix_use_msa,
+                                                seed=seed)
+
             else:
                 QtWidgets.QMessageBox.critical(form, "Error", f"Not a supported model name: {str(model_name)}")
                 return
@@ -294,7 +368,7 @@ def make_dialog():
             if af_coloring:
                 apply_alphafold_colors(object_name)
             
-            QtWidgets.QMessageBox.information(form, "Success", "Structure folded and loaded into PyMOL!")
+            QtWidgets.QMessageBox.information(form, "Success", f"Sequence folded with {model_name} and structure loaded into PyMOL!")
         
         except Exception as e:
             QtWidgets.QMessageBox.critical(form, "Error", f"An error occurred: {str(e)}")

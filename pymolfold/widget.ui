@@ -13,7 +13,7 @@
     <x>0</x>
     <y>0</y>
     <width>490</width>
-    <height>676</height>
+    <height>733</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -38,7 +38,54 @@
    </item>
    <item>
     <layout class="QGridLayout" name="grid_main">
-     <item row="2" column="0">
+     <item row="0" column="1">
+      <widget class="QComboBox" name="input_list_models">
+       <property name="maxVisibleItems">
+        <number>100</number>
+       </property>
+       <item>
+        <property name="text">
+         <string>esm3-small-2024-08</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>esm3-open-2024-03</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>esm3-medium-2024-08</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>esm3-large-2024-03</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>esm3-medium-multimer-2024-09</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>boltz-1</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>chai-1</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>protenix</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item row="4" column="0">
       <widget class="QLabel" name="label_settings">
        <property name="font">
         <font>
@@ -51,7 +98,81 @@
        </property>
       </widget>
      </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_model">
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Model Name</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="label_aa_seq">
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string notr="true">Amino Acid Sequence</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QPlainTextEdit" name="input_aa_seq">
+       <property name="sizeAdjustPolicy">
+        <enum>QAbstractScrollArea::AdjustToContents</enum>
+       </property>
+       <property name="plainText">
+        <string>FVNQHLCGSHLVEALYLVCGERGFFYTPKTRREAEDLQGSLQPLALEGSLQKRGIVEQCCTSICSLYQLENYCN</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="1">
+      <widget class="QComboBox" name="input_ligand_type">
+       <item>
+        <property name="text">
+         <string>ccd</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>smiles</string>
+        </property>
+       </item>
+      </widget>
+     </item>
      <item row="2" column="1">
+      <widget class="QPlainTextEdit" name="input_ligand">
+       <property name="sizeAdjustPolicy">
+        <enum>QAbstractScrollArea::AdjustToContentsOnFirstShow</enum>
+       </property>
+       <property name="placeholderText">
+        <string>Enter CCD code or SMILES string (optional)</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="0">
+      <widget class="QLabel" name="label_ligand_type">
+       <property name="text">
+        <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Ligand Type&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="label_ligand">
+       <property name="text">
+        <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Ligand (CCD/SMILES)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="1">
       <layout class="QFormLayout" name="formLayout">
        <item row="0" column="0" colspan="2">
         <widget class="QGroupBox" name="group_esm">
@@ -159,51 +280,13 @@
         </widget>
        </item>
        <item row="6" column="0">
-        <widget class="QLabel" name="label_boltz_ligand">
-         <property name="text">
-          <string notr="true">Ligand (CCD/SMILES)</string>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="1">
-        <widget class="QPlainTextEdit" name="input_boltz_ligand">
-         <property name="sizeAdjustPolicy">
-          <enum>QAbstractScrollArea::AdjustToContentsOnFirstShow</enum>
-         </property>
-         <property name="placeholderText">
-          <string>Enter CCD code or SMILES string (optional)</string>
-         </property>
-        </widget>
-       </item>
-       <item row="7" column="0">
-        <widget class="QLabel" name="label_ligand_type">
-         <property name="text">
-          <string notr="true">Ligand Type</string>
-         </property>
-        </widget>
-       </item>
-       <item row="7" column="1">
-        <widget class="QComboBox" name="input_boltz_ligand_type">
-         <item>
-          <property name="text">
-           <string>ccd</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>smiles</string>
-          </property>
-         </item>
-        </widget>
-       </item>
-       <item row="8" column="0">
         <widget class="QLabel" name="label_boltz_recycling_steps">
          <property name="text">
           <string>Recycling Steps</string>
          </property>
         </widget>
        </item>
-       <item row="8" column="1">
+       <item row="6" column="1">
         <widget class="QLineEdit" name="input_boltz_recycling_steps">
          <property name="inputMask">
           <string>999</string>
@@ -213,14 +296,14 @@
          </property>
         </widget>
        </item>
-       <item row="9" column="0">
+       <item row="7" column="0">
         <widget class="QLabel" name="label_boltz_sampling_steps">
          <property name="text">
           <string>Sampling Steps</string>
          </property>
         </widget>
        </item>
-       <item row="9" column="1">
+       <item row="7" column="1">
         <widget class="QLineEdit" name="input_boltz_sampling_steps">
          <property name="inputMask">
           <string>99999</string>
@@ -230,28 +313,48 @@
          </property>
         </widget>
        </item>
-       <item row="10" column="0">
+       <item row="8" column="0">
         <widget class="QLabel" name="label_boltz_use_msa_server">
          <property name="text">
           <string>Use MSA Server?</string>
          </property>
         </widget>
        </item>
-       <item row="11" column="0" colspan="2">
+       <item row="8" column="1">
+        <widget class="QCheckBox" name="input_boltz_use_msa_server">
+         <property name="text">
+          <string>https://api.colabfold.com</string>
+         </property>
+        </widget>
+       </item>
+       <item row="9" column="0" colspan="2">
         <widget class="Line" name="line_2">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
          </property>
         </widget>
        </item>
-       <item row="13" column="0">
+       <item row="10" column="0" colspan="2">
+        <widget class="QGroupBox" name="group_chai">
+         <property name="font">
+          <font>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="title">
+          <string>Chai Settings</string>
+         </property>
+        </widget>
+       </item>
+       <item row="11" column="0">
         <widget class="QLabel" name="label_chai_recycling_steps">
          <property name="text">
           <string>Recycling Steps</string>
          </property>
         </widget>
        </item>
-       <item row="13" column="1">
+       <item row="11" column="1">
         <widget class="QLineEdit" name="input_chai_recycling_steps">
          <property name="inputMask">
           <string>999</string>
@@ -261,14 +364,14 @@
          </property>
         </widget>
        </item>
-       <item row="14" column="0">
+       <item row="12" column="0">
         <widget class="QLabel" name="label_chai_diffusion_steps">
          <property name="text">
           <string>Diffusion Steps</string>
          </property>
         </widget>
        </item>
-       <item row="14" column="1">
+       <item row="12" column="1">
         <widget class="QLineEdit" name="input_chai_diffusion_steps">
          <property name="inputMask">
           <string>9999</string>
@@ -278,8 +381,45 @@
          </property>
         </widget>
        </item>
-       <item row="16" column="0" colspan="2">
+       <item row="13" column="0" colspan="2">
         <widget class="Line" name="line_3">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="14" column="0" colspan="2">
+        <widget class="QGroupBox" name="group_protenix">
+         <property name="font">
+          <font>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="title">
+          <string>Protenix Settings</string>
+         </property>
+        </widget>
+       </item>
+       <item row="15" column="0">
+        <widget class="QLabel" name="label_protenix_use_msa">
+         <property name="text">
+          <string>Perform MSA?</string>
+         </property>
+        </widget>
+       </item>
+       <item row="15" column="1">
+        <widget class="QCheckBox" name="input_protenix_use_msa_server">
+         <property name="text">
+          <string>Local with mmseqs</string>
+         </property>
+        </widget>
+       </item>
+       <item row="16" column="0" colspan="2">
+        <widget class="Line" name="line_4">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
          </property>
@@ -299,35 +439,14 @@
         </widget>
        </item>
        <item row="18" column="0">
-        <widget class="QLabel" name="label_coloring">
-         <property name="text">
-          <string>Coloring</string>
-         </property>
-        </widget>
-       </item>
-       <item row="18" column="1">
-        <widget class="QCheckBox" name="input_af_coloring">
-         <property name="text">
-          <string>AlphaFold Confidence Colors</string>
-         </property>
-        </widget>
-       </item>
-       <item row="10" column="1">
-        <widget class="QCheckBox" name="input_boltz_use_msa_server">
-         <property name="text">
-          <string>https://api.colabfold.com</string>
-         </property>
-        </widget>
-       </item>
-       <item row="15" column="0">
-        <widget class="QLabel" name="label_chai_seed">
+        <widget class="QLabel" name="label_seed">
          <property name="text">
           <string>Seed</string>
          </property>
         </widget>
        </item>
-       <item row="15" column="1">
-        <widget class="QLineEdit" name="input_chai_seed">
+       <item row="18" column="1">
+        <widget class="QLineEdit" name="input_seed">
          <property name="inputMask">
           <string>99999999</string>
          </property>
@@ -336,98 +455,21 @@
          </property>
         </widget>
        </item>
-       <item row="12" column="0" colspan="2">
-        <widget class="QGroupBox" name="group_chai">
-         <property name="font">
-          <font>
-           <weight>75</weight>
-           <bold>true</bold>
-          </font>
+       <item row="19" column="0">
+        <widget class="QLabel" name="label_coloring">
+         <property name="text">
+          <string>Coloring</string>
          </property>
-         <property name="title">
-          <string>Chai Settings</string>
+        </widget>
+       </item>
+       <item row="19" column="1">
+        <widget class="QCheckBox" name="input_af_coloring">
+         <property name="text">
+          <string>AlphaFold Confidence Colors</string>
          </property>
         </widget>
        </item>
       </layout>
-     </item>
-     <item row="0" column="1">
-      <widget class="QComboBox" name="input_list_models">
-       <property name="maxVisibleItems">
-        <number>100</number>
-       </property>
-       <item>
-        <property name="text">
-         <string>esm3-small-2024-08</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>esm3-open-2024-03</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>esm3-medium-2024-08</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>esm3-large-2024-03</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>esm3-medium-multimer-2024-09</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>boltz-1</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>chai-1</string>
-        </property>
-       </item>
-      </widget>
-     </item>
-     <item row="1" column="0">
-      <widget class="QLabel" name="label_aa_seq">
-       <property name="font">
-        <font>
-         <weight>75</weight>
-         <bold>true</bold>
-        </font>
-       </property>
-       <property name="text">
-        <string notr="true">Amino Acid Sequence</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="0">
-      <widget class="QLabel" name="label_model">
-       <property name="font">
-        <font>
-         <weight>75</weight>
-         <bold>true</bold>
-        </font>
-       </property>
-       <property name="text">
-        <string>Model Name</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="1">
-      <widget class="QPlainTextEdit" name="input_aa_seq">
-       <property name="sizeAdjustPolicy">
-        <enum>QAbstractScrollArea::AdjustToContents</enum>
-       </property>
-       <property name="plainText">
-        <string>FVNQHLCGSHLVEALYLVCGERGFFYTPKTRREAEDLQGSLQPLALEGSLQKRGIVEQCCTSICSLYQLENYCN</string>
-       </property>
-      </widget>
      </item>
     </layout>
    </item>

@@ -1,0 +1,17 @@
+# run: conda env create --file environment.yml
+name: pymolfold
+channels:
+  - conda-forge
+  - schrodinger
+dependencies:
+- python>=3.12
+- pip
+- pymol-bundle
+- pip:
+## Uncomment the model you'd like to install and use
+## Note: It's unlikely that you can install all models at once due to conflicting dependencies
+  - esm
+  # - boltz
+  # - chai_lab
+  # - git+https://github.com/chaidiscovery/chai-lab.git
+  # - protenix
