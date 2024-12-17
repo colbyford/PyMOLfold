@@ -26,12 +26,11 @@ Plugin for folding sequences directly in PyMOL using various models (ESM3, Boltz
 3. Click the *Fetch* button and follow the prompts to install the package.
 
 
-
 Once installed, navigate to *Plugin* > *PyMOLfold* in the menu bar.
 Then, in the dialog box, simply paste in your API key and amino acid sequence you wish to fold.
 
 > [!NOTE]
-> Note: This plugin does not include any of the model package(s) or weights. You'll need to install them into the PyMOL conda environment.
+> Note: This plugin does not include any of the model package(s) or weights. You'll need to install them into the PyMOL Conda environment.
 
 
 ## Package Installation
@@ -49,7 +48,6 @@ Then, to run a command in your normal terminal, simply point to the PyMOL Python
 ```bash
 /home/<username>/biotools/pymol/bin/python -m pip install <package_name>
 ```
-If you get any error in pip command installations, then try again by removing -m
 
 Here are the example install commands for the supported models:
 
