@@ -8,6 +8,7 @@ License: GPLv3
 from __future__ import absolute_import
 from __future__ import print_function
 import os, tempfile, random, string, sys, subprocess, json
+from pathlib import Path
 
 def __init_plugin__(app=None):
     '''
@@ -184,7 +185,7 @@ def fold_boltz(aa_sequence:str, ligand:str=None, ligand_type:str=None, use_msa_s
     
     return folded_pdb_path
 
-def fold_protenix(aa_sequence:str, ligand:str=None, use_msa_server:bool=False, seed:int=1337):
+def fold_protenix(aa_sequence:str, ligand:str=None, ligand_type:str="smiles", use_msa_server:bool=False, seed:int=1337):
     """
     Protein folding using Protenix model
     """
@@ -207,13 +208,15 @@ def fold_protenix(aa_sequence:str, ligand:str=None, use_msa_server:bool=False, s
     
     ## If ligand provided, add it to the JSON
     if ligand:
+        if ligand_type.upper() == "CCD":
+            ligand = f"CCD_{ligand[:4]}" if ligand.upper().startswith("CCD_") else f"CCD_{ligand}"
         ligand_dict = {
             "ligand": {
                 "ligand": ligand,
                 "count": 1
             }
         }
-    json_content[0]["sequences"].append(ligand_dict)
+        json_content[0]["sequences"].append(ligand_dict)
 
     ## Create temp json file
     with tempfile.NamedTemporaryFile(delete=False, suffix=".json") as temp_json:
@@ -240,12 +243,12 @@ def fold_protenix(aa_sequence:str, ligand:str=None, use_msa_server:bool=False, s
     except Exception as e:
         raise Exception(f"Error during structure prediction: {str(e)}")
 
-    ## Get the path to the folded CIF file
-    folded_cif_path = os.path.join(output_dir,
-                                   "pymolfold",
-                                   str(seed),
-                                   "pymolfold_1337_sample_0.cif")
-    
+    cif_files = [str(file) for file in Path(os.path.join(output_dir, "pymolfold")).rglob("*")
+                 if file.is_file() and str(file).endswith("_sample_0.cif")]
+    if len(cif_files) > 0:
+        folded_cif_path = cif_files[0]
+    else:
+        raise Exception(f"No valid result found in {os.path.join(output_dir, 'pymolfold')}")
     if not os.path.exists(folded_cif_path):
         raise Exception(f"Expected output file not found: {folded_cif_path}")
     
@@ -343,7 +346,7 @@ def make_dialog():
             
             elif model_name == "protenix":
                 ## Protenix Parameters
-                protenix_use_msa = form.input_protenix_use_msa.isChecked()
+                protenix_use_msa = form.input_protenix_use_msa_server.isChecked()
 
                 folded_pdb_path = fold_protenix(aa_sequence,
                                                 ligand=ligand_sequence,
