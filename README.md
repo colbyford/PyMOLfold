@@ -1,5 +1,5 @@
 # PyMOLfold
-Plugin for folding sequences directly in PyMOL using various models (ESM3, Boltz-1, Chai-1 and Protenix).
+Plugin for folding sequences directly in PyMOL using various models (ESM3, Boltz-1, Chai-1, and Protenix).
 
 <h3 align="right">Colby T. Ford, Ph.D.</h3>
 
