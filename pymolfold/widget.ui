@@ -12,12 +12,12 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>490</width>
-    <height>733</height>
+    <width>420</width>
+    <height>760</height>
    </rect>
   </property>
   <property name="sizePolicy">
-   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+   <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
     <horstretch>0</horstretch>
     <verstretch>0</verstretch>
    </sizepolicy>
@@ -25,9 +25,24 @@
   <property name="windowTitle">
    <string notr="true">PyMOLfold Plugin</string>
   </property>
+  <property name="autoFillBackground">
+   <bool>false</bool>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(52,52,52); color: rgb(255,255,255)</string>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="sizeConstraint">
+    <enum>QLayout::SetMinimumSize</enum>
+   </property>
    <item>
     <widget class="QLabel" name="label_title">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="styleSheet">
       <string notr="true">background-color: #000;color:white; padding: 10px</string>
      </property>
@@ -38,11 +53,504 @@
    </item>
    <item>
     <layout class="QGridLayout" name="grid_main">
+     <property name="sizeConstraint">
+      <enum>QLayout::SetDefaultConstraint</enum>
+     </property>
+     <item row="4" column="1">
+      <layout class="QFormLayout" name="formLayout">
+       <property name="sizeConstraint">
+        <enum>QLayout::SetDefaultConstraint</enum>
+       </property>
+       <item row="0" column="0" colspan="2">
+        <widget class="QGroupBox" name="group_esm_settings">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <property name="font">
+          <font>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="title">
+          <string>ESM3 Settings</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout">
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_esm_token">
+            <property name="font">
+             <font>
+              <weight>50</weight>
+              <bold>false</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string notr="true">Forge Token</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QLineEdit" name="input_esm_token">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="font">
+             <font>
+              <weight>50</weight>
+              <bold>false</bold>
+             </font>
+            </property>
+            <property name="echoMode">
+             <enum>QLineEdit::PasswordEchoOnEdit</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_esm_temp">
+            <property name="font">
+             <font>
+              <weight>50</weight>
+              <bold>false</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>Temperature</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLineEdit" name="input_esm_temp">
+            <property name="font">
+             <font>
+              <weight>50</weight>
+              <bold>false</bold>
+             </font>
+            </property>
+            <property name="toolTip">
+             <string>Decimal value bettween [0,1]</string>
+            </property>
+            <property name="inputMask">
+             <string>9.99</string>
+            </property>
+            <property name="text">
+             <string>0.70</string>
+            </property>
+            <property name="placeholderText">
+             <string>Decimal value bettween [0,1]</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_esm_nsteps">
+            <property name="font">
+             <font>
+              <weight>50</weight>
+              <bold>false</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>Number of Steps</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QLineEdit" name="input_esm_nsteps">
+            <property name="font">
+             <font>
+              <weight>50</weight>
+              <bold>false</bold>
+             </font>
+            </property>
+            <property name="autoFillBackground">
+             <bool>false</bool>
+            </property>
+            <property name="inputMask">
+             <string>999</string>
+            </property>
+            <property name="text">
+             <string>8</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="2" column="0" colspan="2">
+        <widget class="QGroupBox" name="group_chai_settings">
+         <property name="font">
+          <font>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="title">
+          <string>Chai Settings</string>
+         </property>
+         <layout class="QFormLayout" name="formLayout_6">
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_chai_recycling_steps">
+            <property name="font">
+             <font>
+              <weight>50</weight>
+              <bold>false</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>Recycling Steps</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QLineEdit" name="input_chai_recycling_steps">
+            <property name="font">
+             <font>
+              <weight>50</weight>
+              <bold>false</bold>
+             </font>
+            </property>
+            <property name="inputMask">
+             <string>999</string>
+            </property>
+            <property name="text">
+             <string>3</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLineEdit" name="input_chai_diffusion_steps">
+            <property name="font">
+             <font>
+              <weight>50</weight>
+              <bold>false</bold>
+             </font>
+            </property>
+            <property name="inputMask">
+             <string>9999</string>
+            </property>
+            <property name="text">
+             <string>200</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_chai_diffusion_steps">
+            <property name="font">
+             <font>
+              <weight>50</weight>
+              <bold>false</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>Diffusion Steps</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="3" column="0" colspan="2">
+        <widget class="QGroupBox" name="group_protenix_settings">
+         <property name="font">
+          <font>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="title">
+          <string>Protenix Settings</string>
+         </property>
+         <layout class="QFormLayout" name="formLayout_5">
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_protenix_use_msa">
+            <property name="font">
+             <font>
+              <weight>50</weight>
+              <bold>false</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>Perform MSA?</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QCheckBox" name="input_protenix_use_msa_server">
+            <property name="font">
+             <font>
+              <weight>50</weight>
+              <bold>false</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>Local with mmseqs</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="4" column="0" colspan="2">
+        <widget class="QGroupBox" name="group_general_settings">
+         <property name="font">
+          <font>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="title">
+          <string>General</string>
+         </property>
+         <layout class="QFormLayout" name="formLayout_4">
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_seed">
+            <property name="font">
+             <font>
+              <weight>50</weight>
+              <bold>false</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>Seed</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QLineEdit" name="input_seed">
+            <property name="font">
+             <font>
+              <weight>50</weight>
+              <bold>false</bold>
+             </font>
+            </property>
+            <property name="inputMask">
+             <string>99999999</string>
+            </property>
+            <property name="text">
+             <string>1337</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_coloring">
+            <property name="font">
+             <font>
+              <weight>50</weight>
+              <bold>false</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>Coloring</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QCheckBox" name="input_af_coloring">
+            <property name="font">
+             <font>
+              <weight>50</weight>
+              <bold>false</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>AlphaFold Confidence Colors</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="1" column="0" colspan="2">
+        <widget class="QGroupBox" name="group_boltz_settings">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="font">
+          <font>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="title">
+          <string>Boltz Settings</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+         </property>
+         <property name="flat">
+          <bool>false</bool>
+         </property>
+         <property name="checkable">
+          <bool>false</bool>
+         </property>
+         <layout class="QFormLayout" name="formLayout_3">
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_boltz_recycling_steps">
+            <property name="font">
+             <font>
+              <weight>50</weight>
+              <bold>false</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>Recycling Steps</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QLineEdit" name="input_boltz_recycling_steps">
+            <property name="font">
+             <font>
+              <weight>50</weight>
+              <bold>false</bold>
+             </font>
+            </property>
+            <property name="inputMask">
+             <string>999</string>
+            </property>
+            <property name="text">
+             <string>3</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLineEdit" name="input_boltz_sampling_steps">
+            <property name="font">
+             <font>
+              <weight>50</weight>
+              <bold>false</bold>
+             </font>
+            </property>
+            <property name="inputMask">
+             <string>99999</string>
+            </property>
+            <property name="text">
+             <string>200</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_boltz_sampling_steps">
+            <property name="font">
+             <font>
+              <weight>50</weight>
+              <bold>false</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>Sampling Steps</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_boltz_use_msa_server">
+            <property name="font">
+             <font>
+              <weight>50</weight>
+              <bold>false</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>Use MSA Server?</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QCheckBox" name="input_boltz_use_msa_server">
+            <property name="font">
+             <font>
+              <weight>50</weight>
+              <bold>false</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>https://api.colabfold.com</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item row="3" column="0">
+      <widget class="QLabel" name="label_ligand_type">
+       <property name="autoFillBackground">
+        <bool>false</bool>
+       </property>
+       <property name="text">
+        <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Ligand Type&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="label_ligand">
+       <property name="autoFillBackground">
+        <bool>false</bool>
+       </property>
+       <property name="text">
+        <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Ligand (CCD/SMILES)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QPlainTextEdit" name="input_ligand">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="sizeAdjustPolicy">
+        <enum>QAbstractScrollArea::AdjustToContentsOnFirstShow</enum>
+       </property>
+       <property name="placeholderText">
+        <string>Enter CCD code or SMILES string (optional)</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QPlainTextEdit" name="input_aa_seq">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="sizeAdjustPolicy">
+        <enum>QAbstractScrollArea::AdjustToContents</enum>
+       </property>
+       <property name="plainText">
+        <string>FVNQHLCGSHLVEALYLVCGERGFFYTPKTRREAEDLQGSLQPLALEGSLQKRGIVEQCCTSICSLYQLENYCN</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="1">
+      <widget class="QComboBox" name="input_ligand_type">
+       <item>
+        <property name="text">
+         <string>ccd</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>smiles</string>
+        </property>
+       </item>
+      </widget>
+     </item>
      <item row="0" column="1">
       <widget class="QComboBox" name="input_list_models">
        <property name="maxVisibleItems">
         <number>100</number>
        </property>
+       <item>
+        <property name="text">
+         <string>--Select Model--</string>
+        </property>
+       </item>
        <item>
         <property name="text">
          <string>esm3-small-2024-08</string>
@@ -85,19 +593,6 @@
        </item>
       </widget>
      </item>
-     <item row="4" column="0">
-      <widget class="QLabel" name="label_settings">
-       <property name="font">
-        <font>
-         <weight>75</weight>
-         <bold>true</bold>
-        </font>
-       </property>
-       <property name="text">
-        <string>Settings</string>
-       </property>
-      </widget>
-     </item>
      <item row="0" column="0">
       <widget class="QLabel" name="label_model">
        <property name="font">
@@ -106,8 +601,27 @@
          <bold>true</bold>
         </font>
        </property>
+       <property name="autoFillBackground">
+        <bool>false</bool>
+       </property>
        <property name="text">
         <string>Model Name</string>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="0">
+      <widget class="QLabel" name="label_settings">
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="autoFillBackground">
+        <bool>false</bool>
+       </property>
+       <property name="text">
+        <string>Settings</string>
        </property>
       </widget>
      </item>
@@ -119,357 +633,13 @@
          <bold>true</bold>
         </font>
        </property>
+       <property name="autoFillBackground">
+        <bool>false</bool>
+       </property>
        <property name="text">
         <string notr="true">Amino Acid Sequence</string>
        </property>
       </widget>
-     </item>
-     <item row="1" column="1">
-      <widget class="QPlainTextEdit" name="input_aa_seq">
-       <property name="sizeAdjustPolicy">
-        <enum>QAbstractScrollArea::AdjustToContents</enum>
-       </property>
-       <property name="plainText">
-        <string>FVNQHLCGSHLVEALYLVCGERGFFYTPKTRREAEDLQGSLQPLALEGSLQKRGIVEQCCTSICSLYQLENYCN</string>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="1">
-      <widget class="QComboBox" name="input_ligand_type">
-       <item>
-        <property name="text">
-         <string>ccd</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>smiles</string>
-        </property>
-       </item>
-      </widget>
-     </item>
-     <item row="2" column="1">
-      <widget class="QPlainTextEdit" name="input_ligand">
-       <property name="sizeAdjustPolicy">
-        <enum>QAbstractScrollArea::AdjustToContentsOnFirstShow</enum>
-       </property>
-       <property name="placeholderText">
-        <string>Enter CCD code or SMILES string (optional)</string>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="0">
-      <widget class="QLabel" name="label_ligand_type">
-       <property name="text">
-        <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Ligand Type&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="0">
-      <widget class="QLabel" name="label_ligand">
-       <property name="text">
-        <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Ligand (CCD/SMILES)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-       </property>
-      </widget>
-     </item>
-     <item row="4" column="1">
-      <layout class="QFormLayout" name="formLayout">
-       <item row="0" column="0" colspan="2">
-        <widget class="QGroupBox" name="group_esm">
-         <property name="font">
-          <font>
-           <weight>75</weight>
-           <bold>true</bold>
-          </font>
-         </property>
-         <property name="title">
-          <string>ESM3 Settings</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="QLabel" name="label_esm_token">
-         <property name="text">
-          <string notr="true">Forge Token</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1">
-        <widget class="QLineEdit" name="input_esm_token">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="echoMode">
-          <enum>QLineEdit::PasswordEchoOnEdit</enum>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="0">
-        <widget class="QLabel" name="label_esm_temp">
-         <property name="text">
-          <string>Temperature</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="1">
-        <widget class="QLineEdit" name="input_esm_temp">
-         <property name="toolTip">
-          <string>Decimal value bettween [0,1]</string>
-         </property>
-         <property name="inputMask">
-          <string>9.99</string>
-         </property>
-         <property name="text">
-          <string>0.70</string>
-         </property>
-         <property name="placeholderText">
-          <string>Decimal value bettween [0,1]</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="0">
-        <widget class="QLabel" name="label_esm_nsteps">
-         <property name="text">
-          <string>Number of Steps</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="1">
-        <widget class="QLineEdit" name="input_esm_nsteps">
-         <property name="autoFillBackground">
-          <bool>false</bool>
-         </property>
-         <property name="inputMask">
-          <string>999</string>
-         </property>
-         <property name="text">
-          <string>8</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="0" colspan="2">
-        <widget class="Line" name="line_1">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="0" colspan="2">
-        <widget class="QGroupBox" name="group_boltz">
-         <property name="font">
-          <font>
-           <weight>75</weight>
-           <bold>true</bold>
-          </font>
-         </property>
-         <property name="title">
-          <string>Boltz Settings</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-         </property>
-         <property name="flat">
-          <bool>false</bool>
-         </property>
-         <property name="checkable">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="0">
-        <widget class="QLabel" name="label_boltz_recycling_steps">
-         <property name="text">
-          <string>Recycling Steps</string>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="1">
-        <widget class="QLineEdit" name="input_boltz_recycling_steps">
-         <property name="inputMask">
-          <string>999</string>
-         </property>
-         <property name="text">
-          <string>3</string>
-         </property>
-        </widget>
-       </item>
-       <item row="7" column="0">
-        <widget class="QLabel" name="label_boltz_sampling_steps">
-         <property name="text">
-          <string>Sampling Steps</string>
-         </property>
-        </widget>
-       </item>
-       <item row="7" column="1">
-        <widget class="QLineEdit" name="input_boltz_sampling_steps">
-         <property name="inputMask">
-          <string>99999</string>
-         </property>
-         <property name="text">
-          <string>200</string>
-         </property>
-        </widget>
-       </item>
-       <item row="8" column="0">
-        <widget class="QLabel" name="label_boltz_use_msa_server">
-         <property name="text">
-          <string>Use MSA Server?</string>
-         </property>
-        </widget>
-       </item>
-       <item row="8" column="1">
-        <widget class="QCheckBox" name="input_boltz_use_msa_server">
-         <property name="text">
-          <string>https://api.colabfold.com</string>
-         </property>
-        </widget>
-       </item>
-       <item row="9" column="0" colspan="2">
-        <widget class="Line" name="line_2">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-        </widget>
-       </item>
-       <item row="10" column="0" colspan="2">
-        <widget class="QGroupBox" name="group_chai">
-         <property name="font">
-          <font>
-           <weight>75</weight>
-           <bold>true</bold>
-          </font>
-         </property>
-         <property name="title">
-          <string>Chai Settings</string>
-         </property>
-        </widget>
-       </item>
-       <item row="11" column="0">
-        <widget class="QLabel" name="label_chai_recycling_steps">
-         <property name="text">
-          <string>Recycling Steps</string>
-         </property>
-        </widget>
-       </item>
-       <item row="11" column="1">
-        <widget class="QLineEdit" name="input_chai_recycling_steps">
-         <property name="inputMask">
-          <string>999</string>
-         </property>
-         <property name="text">
-          <string>3</string>
-         </property>
-        </widget>
-       </item>
-       <item row="12" column="0">
-        <widget class="QLabel" name="label_chai_diffusion_steps">
-         <property name="text">
-          <string>Diffusion Steps</string>
-         </property>
-        </widget>
-       </item>
-       <item row="12" column="1">
-        <widget class="QLineEdit" name="input_chai_diffusion_steps">
-         <property name="inputMask">
-          <string>9999</string>
-         </property>
-         <property name="text">
-          <string>200</string>
-         </property>
-        </widget>
-       </item>
-       <item row="13" column="0" colspan="2">
-        <widget class="Line" name="line_3">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-        </widget>
-       </item>
-       <item row="14" column="0" colspan="2">
-        <widget class="QGroupBox" name="group_protenix">
-         <property name="font">
-          <font>
-           <weight>75</weight>
-           <bold>true</bold>
-          </font>
-         </property>
-         <property name="title">
-          <string>Protenix Settings</string>
-         </property>
-        </widget>
-       </item>
-       <item row="15" column="0">
-        <widget class="QLabel" name="label_protenix_use_msa">
-         <property name="text">
-          <string>Perform MSA?</string>
-         </property>
-        </widget>
-       </item>
-       <item row="15" column="1">
-        <widget class="QCheckBox" name="input_protenix_use_msa_server">
-         <property name="text">
-          <string>Local with mmseqs</string>
-         </property>
-        </widget>
-       </item>
-       <item row="16" column="0" colspan="2">
-        <widget class="Line" name="line_4">
-         <property name="enabled">
-          <bool>true</bool>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-        </widget>
-       </item>
-       <item row="17" column="0" colspan="2">
-        <widget class="QGroupBox" name="group_general">
-         <property name="font">
-          <font>
-           <weight>75</weight>
-           <bold>true</bold>
-          </font>
-         </property>
-         <property name="title">
-          <string>General</string>
-         </property>
-        </widget>
-       </item>
-       <item row="18" column="0">
-        <widget class="QLabel" name="label_seed">
-         <property name="text">
-          <string>Seed</string>
-         </property>
-        </widget>
-       </item>
-       <item row="18" column="1">
-        <widget class="QLineEdit" name="input_seed">
-         <property name="inputMask">
-          <string>99999999</string>
-         </property>
-         <property name="text">
-          <string>1337</string>
-         </property>
-        </widget>
-       </item>
-       <item row="19" column="0">
-        <widget class="QLabel" name="label_coloring">
-         <property name="text">
-          <string>Coloring</string>
-         </property>
-        </widget>
-       </item>
-       <item row="19" column="1">
-        <widget class="QCheckBox" name="input_af_coloring">
-         <property name="text">
-          <string>AlphaFold Confidence Colors</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
      </item>
     </layout>
    </item>
@@ -477,6 +647,15 @@
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <widget class="QPushButton" name="button_fold">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color:rgb(126,93,168)</string>
+       </property>
        <property name="text">
         <string notr="true">Fold</string>
        </property>
@@ -484,8 +663,17 @@
      </item>
      <item>
       <widget class="QPushButton" name="button_close">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <property name="text">
         <string notr="true">Close</string>
+       </property>
+       <property name="flat">
+        <bool>false</bool>
        </property>
       </widget>
      </item>

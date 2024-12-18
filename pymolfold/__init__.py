@@ -291,6 +291,16 @@ def make_dialog():
     uifile = os.path.join(os.path.dirname(__file__), 'widget.ui')
     form = loadUi(uifile, dialog)
 
+    ## Hide UI controls
+    form.input_ligand.setVisible(False)
+    form.label_ligand.setVisible(False)
+    form.input_ligand_type.setVisible(False)
+    form.label_ligand_type.setVisible(False)
+    form.group_esm_settings.setVisible(False)
+    form.group_chai_settings.setVisible(False)
+    form.group_boltz_settings.setVisible(False)
+    form.group_protenix_settings.setVisible(False)
+
     ## Callback for the "Fold" button
     def run():
 
@@ -376,8 +386,28 @@ def make_dialog():
         except Exception as e:
             QtWidgets.QMessageBox.critical(form, "Error", f"An error occurred: {str(e)}")
 
+    def update_ui():
+        ## Update the UI based on the selected model
+        model_name = form.input_list_models.currentText()
+
+        ## Ligand supported models
+        ligand_supported_models = ["chai-1", "boltz-1", "protenix"]
+        form.input_ligand.setVisible(model_name in ligand_supported_models)
+        form.label_ligand.setVisible(model_name in ligand_supported_models)
+        form.input_ligand_type.setVisible(model_name in ligand_supported_models)
+        form.label_ligand_type.setVisible(model_name in ligand_supported_models)
+
+        ## Group boxes for settings
+        form.group_esm_settings.setVisible(model_name.startswith("esm3"))
+        form.group_chai_settings.setVisible(model_name=="chai-1")
+        form.group_boltz_settings.setVisible(model_name=="boltz-1")
+        form.group_protenix_settings.setVisible(model_name=="protenix")
+
     ## Button callbacks
     form.button_fold.clicked.connect(run)
     form.button_close.clicked.connect(dialog.close)
+
+    ## Model selection callback
+    form.input_list_models.currentIndexChanged.connect(update_ui)
 
     return dialog
