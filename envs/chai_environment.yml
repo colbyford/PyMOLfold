@@ -1,0 +1,11 @@
+name: pymolfold-chai
+channels:
+  - conda-forge
+  - schrodinger
+dependencies:
+- python>=3.12
+- pip
+- pymol-bundle
+- pip:
+  # - chai_lab
+  # - git+https://github.com/chaidiscovery/chai-lab.git

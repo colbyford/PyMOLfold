@@ -1,0 +1,10 @@
+name: pymolfold-esm
+channels:
+  - conda-forge
+  - schrodinger
+dependencies:
+- python>=3.12
+- pip
+- pymol-bundle
+- pip:
+  - esm
