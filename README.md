@@ -79,7 +79,7 @@ pymol ## This will open the GUI
 ## Feature Roadmap
 
 - [ ] UI updates for model-specific controls
-- [ ] Support for multiple protein chains.
+- [ ] Support for multiple protein chains (with `esm3-medium-multimer-2024-09`).
 - [X] Model support for Protenix model
     - In v0.3.0 release (Credit: @colbyford and @heidongxianhua)
 - [X] Model support for Chai-1 (proteins and protein-ligand complexes)
