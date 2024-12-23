@@ -87,7 +87,7 @@ def fold_chai(aa_sequence:str, ligand:str=None, ligand_type:str="smiles", num_tr
         raise Exception(f"chai_lab module not found: {str(e)}")
     
     ## Start building FASTA content
-    fasta_content = f">A|protein|name=chain_A\n{aa_sequence}\n"
+    fasta_content = f">protein|name=chain_A\n{aa_sequence}\n"
     
     ## Add ligand if provided
     if ligand and ligand_type:
@@ -106,8 +106,8 @@ def fold_chai(aa_sequence:str, ligand:str=None, ligand_type:str="smiles", num_tr
     
     ## Run inferencing
     candidates = run_inference(
-        fasta_file=temp_fasta_path,
-        output_dir=output_dir,
+        fasta_file=Path(temp_fasta_path),
+        output_dir=Path(output_dir),
         num_trunk_recycles=num_trunk_recycles,
         num_diffn_timesteps=num_diffn_timesteps,
         seed=seed,
