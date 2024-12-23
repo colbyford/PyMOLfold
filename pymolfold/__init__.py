@@ -175,7 +175,7 @@ def fold_boltz(aa_sequence:str, ligand:str=None, ligand_type:str=None, use_msa_s
     
     ## Get the path to the folded PDB file
     folded_pdb_path = os.path.join(output_dir,
-                        f"bolts_results_{temp_fasta_filename}",
+                        f"boltz_results_{temp_fasta_filename}",
                         "predictions",
                         temp_fasta_filename,
                         f"{temp_fasta_filename}_model_0.pdb")
