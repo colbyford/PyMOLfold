@@ -6,6 +6,7 @@ dependencies:
 - python>=3.12
 - pip
 - pymol-bundle
+- pyqt
 - pip:
-  # - chai_lab
+  - chai_lab
   # - git+https://github.com/chaidiscovery/chai-lab.git

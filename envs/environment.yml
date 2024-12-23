@@ -7,6 +7,7 @@ dependencies:
 - python>=3.12
 - pip
 - pymol-bundle
+- pyqt
 - pip:
 ## Uncomment the model you'd like to install and use
 ## Note: It's unlikely that you can install all models at once due to conflicting dependencies
