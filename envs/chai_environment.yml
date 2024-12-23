@@ -2,11 +2,13 @@ name: pymolfold-chai
 channels:
   - conda-forge
   - schrodinger
+  - pytorch
 dependencies:
-- python>=3.12
+- python #>=3.10
 - pip
 - pymol-bundle
 - pyqt
+- pytorch=2.3.1
 - pip:
   - chai_lab
   # - git+https://github.com/chaidiscovery/chai-lab.git
