@@ -282,8 +282,20 @@ def get_afdb_structure(database_id):
 
     return pdb_file_path.name
 
-## Coloring Functions
+def get_modelarchive_structure(database_id):
+    ma_url = f"https://www.modelarchive.org/api/projects/{database_id}?type=basic__model_file_name"
 
+    ## Download the CIF file to temp directory
+    cif_file_path = tempfile.NamedTemporaryFile(delete=False, suffix=".cif")
+
+    with requests.get(ma_url, stream=True) as r:
+        r.raise_for_status()
+        for chunk in r.iter_content(chunk_size=8192):
+            cif_file_path.write(chunk)
+
+    return cif_file_path.name
+
+## Coloring Functions
 def apply_alphafold_colors(object_name):
     """
     Apply AlphaFold-style coloring to the structure
@@ -303,6 +315,14 @@ def apply_alphafold_colors(object_name):
     cmd.color("n2", f"{object_name} and b < 70")
     cmd.color("n3", f"{object_name} and b < 50")
 
+def apply_bfactor_colors(object_name):
+    """
+    Apply B-factor coloring to the structure
+    """
+    from pymol import cmd
+
+    ## Apply coloring based on B-factor ranges
+    cmd.spectrum("b", palette="rainbow", selection=object_name)
 
 ## Main Dialog
 def make_dialog():
@@ -368,6 +388,7 @@ def make_dialog():
         ligand_type = form.input_ligand_type.currentText() if ligand_sequence else None
         seed = int(form.input_seed.text())
         af_coloring = form.input_af_coloring.isChecked()
+        bfactor_coloring = form.input_bfactor_coloring.isChecked()
 
         if not aa_sequence:
             QtWidgets.QMessageBox.warning(form, "Error", "Please enter a valid amino acid sequence.")
@@ -425,6 +446,10 @@ def make_dialog():
                 ## Get the structure from AlphaFold database
                 folded_pdb_path = get_afdb_structure(database_id)
 
+            elif model_name == "ModelArchive":
+                ## Get the structure from ModelArchive database
+                folded_pdb_path = get_modelarchive_structure(database_id)
+
             else:
                 QtWidgets.QMessageBox.critical(form, "Error", f"Not a supported model name: {str(model_name)}")
                 return
@@ -441,6 +466,9 @@ def make_dialog():
             ## Apply AlphaFold-style coloring
             if af_coloring:
                 apply_alphafold_colors(object_name)
+
+            if bfactor_coloring:
+                apply_bfactor_colors(object_name)
             
             QtWidgets.QMessageBox.information(form, "Success", f"Structure loaded into PyMOL from {model_name}!")
         
@@ -452,7 +480,7 @@ def make_dialog():
         model_name = form.input_list_models.currentText()
 
         ## Database
-        database_options = ["AlphaFoldDB"]
+        database_options = ["AlphaFoldDB", "ModelArchive"]
         form.input_database_id.setVisible(model_name in database_options)
         form.label_database_id.setVisible(model_name in database_options)
         form.input_uniprot_id.setVisible(model_name not in database_options)
@@ -473,7 +501,7 @@ def make_dialog():
         form.group_chai_settings.setVisible(model_name=="chai-1")
         form.group_boltz_settings.setVisible(model_name=="boltz-1")
         form.group_protenix_settings.setVisible(model_name=="protenix")
-        form.group_general_settings.setVisible(model_name not in database_options)
+        # form.group_general_settings.setVisible(model_name not in database_options)
         form.label_settings.setVisible(model_name not in database_options)
 
         ## Fold button updates

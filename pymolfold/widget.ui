@@ -59,10 +59,10 @@
      <item row="1" column="1">
       <widget class="QLineEdit" name="input_database_id">
        <property name="text">
-        <string>P05067</string>
+        <string/>
        </property>
        <property name="placeholderText">
-        <string>ID to search in database (e.g., P05067)</string>
+        <string>Database ID to search (e.g., P05067, ma-osf-ppp2r2a-001)</string>
        </property>
       </widget>
      </item>
@@ -437,6 +437,13 @@
             </property>
            </widget>
           </item>
+          <item row="2" column="1">
+           <widget class="QCheckBox" name="input_bfactor_coloring">
+            <property name="text">
+             <string>B-Factor Colors</string>
+            </property>
+           </widget>
+          </item>
          </layout>
         </widget>
        </item>
@@ -623,7 +630,12 @@
        </item>
        <item>
         <property name="text">
-         <string>AlphaFoldDB</string>
+         <string extracomment="Database ID is usually a UniProt ID (e.g. P05067)">AlphaFoldDB</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string extracomment="Database ID looks like 'ma-osf-ppp2r2a-001'">ModelArchive</string>
         </property>
        </item>
       </widget>
