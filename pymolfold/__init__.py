@@ -7,7 +7,7 @@ License: GPLv3
 
 from __future__ import absolute_import
 from __future__ import print_function
-import os, tempfile, random, string, sys, subprocess, json
+import os, tempfile, random, string, sys, subprocess, json, requests
 from pathlib import Path
 
 def __init_plugin__(app=None):
@@ -254,6 +254,36 @@ def fold_protenix(aa_sequence:str, ligand:str=None, ligand_type:str="smiles", us
     
     return folded_cif_path
 
+## Database Functions
+
+def get_afdb_structure(database_id):
+    """
+    Get the PDB file for a given AlphaFold database ID
+    """
+    afdb_response = requests.get(f"https://alphafold.ebi.ac.uk/api/prediction/{database_id}",
+                                 headers={"accept": "application/json"},
+                                 params={})
+
+    if not afdb_response.ok:
+        # afdb_response.raise_for_status()
+        raise Exception("Couldn't get the structure for this AlphaFold database ID.")
+
+    data = afdb_response.json()
+
+    pdb_url = data[0]['pdbUrl']
+
+    ## Download the PDB file to temp directory
+    pdb_file_path = tempfile.NamedTemporaryFile(delete=False, suffix=".pdb")
+
+    with requests.get(pdb_url, stream=True) as r:
+        r.raise_for_status()
+        for chunk in r.iter_content(chunk_size=8192):
+            pdb_file_path.write(chunk)
+
+    return pdb_file_path.name
+
+## Coloring Functions
+
 def apply_alphafold_colors(object_name):
     """
     Apply AlphaFold-style coloring to the structure
@@ -291,7 +321,12 @@ def make_dialog():
     uifile = os.path.join(os.path.dirname(__file__), 'widget.ui')
     form = loadUi(uifile, dialog)
 
-    ## Hide UI controls
+    ## Hide UI controls at start
+    form.input_database_id.setVisible(False)
+    form.label_database_id.setVisible(False)
+    form.input_uniprot_id.setVisible(False)
+    form.label_uniprot_id.setVisible(False)
+    form.button_uniprot_id.setVisible(False)
     form.input_ligand.setVisible(False)
     form.label_ligand.setVisible(False)
     form.input_ligand_type.setVisible(False)
@@ -300,12 +335,34 @@ def make_dialog():
     form.group_chai_settings.setVisible(False)
     form.group_boltz_settings.setVisible(False)
     form.group_protenix_settings.setVisible(False)
+    ## Resize the dialog
+    dialog.adjustSize()
+
+    ## UniProt ID Button Callback
+    def get_uniprot_sequence():
+        uniprot_id = form.input_uniprot_id.text()
+        if not uniprot_id:
+            QtWidgets.QMessageBox.warning(form, "Error", "Please enter a valid UniProt ID.")
+            return
+
+        uniprot_response = requests.get(f"https://rest.uniprot.org/uniprotkb/{uniprot_id}",
+                                        headers={"accept": "application/json"},
+                                        params={"fields": ["sequence"]})
+            
+        if not uniprot_response.ok:
+            # uniprot_response.raise_for_status()
+            QtWidgets.QMessageBox.warning(form, "Error", "Couldn't get the sequence for this UniProt ID.")
+
+        ## Set amino acid box text to sequence
+        uniprot_sequence = uniprot_response.json()['sequence']['value']
+        form.input_aa_seq.setPlainText(uniprot_sequence)
 
     ## Callback for the "Fold" button
     def run():
 
         ## Get basic form data
         model_name = form.input_list_models.currentText()
+        database_id = form.input_database_id.text()
         aa_sequence = form.input_aa_seq.toPlainText()
         ligand_sequence = form.input_ligand.toPlainText().strip()
         ligand_type = form.input_ligand_type.currentText() if ligand_sequence else None
@@ -363,6 +420,10 @@ def make_dialog():
                                                 ligand_type=ligand_type,
                                                 use_msa_server=protenix_use_msa,
                                                 seed=seed)
+                
+            elif model_name == "AlphaFoldDB":
+                ## Get the structure from AlphaFold database
+                folded_pdb_path = get_afdb_structure(database_id)
 
             else:
                 QtWidgets.QMessageBox.critical(form, "Error", f"Not a supported model name: {str(model_name)}")
@@ -381,7 +442,7 @@ def make_dialog():
             if af_coloring:
                 apply_alphafold_colors(object_name)
             
-            QtWidgets.QMessageBox.information(form, "Success", f"Sequence folded with {model_name} and structure loaded into PyMOL!")
+            QtWidgets.QMessageBox.information(form, "Success", f"Structure loaded into PyMOL from {model_name}!")
         
         except Exception as e:
             QtWidgets.QMessageBox.critical(form, "Error", f"An error occurred: {str(e)}")
@@ -389,6 +450,16 @@ def make_dialog():
     def update_ui():
         ## Update the UI based on the selected model
         model_name = form.input_list_models.currentText()
+
+        ## Database
+        database_options = ["AlphaFoldDB"]
+        form.input_database_id.setVisible(model_name in database_options)
+        form.label_database_id.setVisible(model_name in database_options)
+        form.input_uniprot_id.setVisible(model_name not in database_options)
+        form.label_uniprot_id.setVisible(model_name not in database_options)
+        form.button_uniprot_id.setVisible(model_name not in database_options)
+        form.input_aa_seq.setVisible(model_name not in database_options)
+        form.label_aa_seq.setVisible(model_name not in database_options)
 
         ## Ligand supported models
         ligand_supported_models = ["chai-1", "boltz-1", "protenix"]
@@ -402,8 +473,29 @@ def make_dialog():
         form.group_chai_settings.setVisible(model_name=="chai-1")
         form.group_boltz_settings.setVisible(model_name=="boltz-1")
         form.group_protenix_settings.setVisible(model_name=="protenix")
+        form.group_general_settings.setVisible(model_name not in database_options)
+        form.label_settings.setVisible(model_name not in database_options)
 
-    ## Button callbacks
+        ## Fold button updates
+        ## Disable the button
+        if model_name.startswith("--"):
+            form.button_fold.setEnabled(False)
+        else:
+            form.button_fold.setEnabled(True)
+
+        ## Button text
+        if model_name in database_options:
+            form.button_fold.setText(f"Download")
+        else:
+            form.button_fold.setText(f"Fold")
+
+        ## Resize the dialog
+        dialog.adjustSize()
+
+    ## UniProt Button Callback
+    form.button_uniprot_id.clicked.connect(get_uniprot_sequence)
+
+    ## Fold Button callbacks
     form.button_fold.clicked.connect(run)
     form.button_close.clicked.connect(dialog.close)
 
