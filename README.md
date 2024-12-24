@@ -79,7 +79,7 @@ pymol ## This will open the GUI
 ## Feature Roadmap
 
 - [ ] Support for multiple protein chains (with `esm3-medium-multimer-2024-09`).
-- [X] Functionality for downloading of existing structures from AlphaFoldDB and ModelArchive
+- [X] Functionality for downloading existing structures from AlphaFoldDB and ModelArchive
     - In v0.4.0 release (Credit: @colbyford and @ullahsamee)
 - [X] UI updates for model-specific controls
     - In v0.3.0 release (Credit: @colbyford)
