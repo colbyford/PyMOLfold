@@ -78,8 +78,9 @@ pymol ## This will open the GUI
 
 ## Feature Roadmap
 
-
 - [ ] Support for multiple protein chains (with `esm3-medium-multimer-2024-09`).
+- [X] Functionality for downloading of existing structures from AlphaFoldDB and ModelArchive
+    - In v0.4.0 release (Credit: @colbyford and @ullahsamee)
 - [X] UI updates for model-specific controls
     - In v0.3.0 release (Credit: @colbyford)
 - [X] Model support for Protenix model
@@ -97,3 +98,8 @@ pymol ## This will open the GUI
 - [X] Basic folding with `esm3-small-2024-08`.
     - In initial release. (Credit: @colbyford)
 
+
+## Contributing
+This PyMOL plugin is an open-source project by design. So, please fork this repository, make any changes, and submit a pull request. Also, log any feature requests or issues in the [Issues](https://github.com/colbyford/PyMOLfold/issues) section of this repo.
+
+We try to follow the [PyMOL Plugins standard](https://pymolwiki.org/index.php/Plugins_Tutorial) for the UI and functionality. (This is why we use a PyQt UI and keep all functions in one `__init__.py` file for now.)
