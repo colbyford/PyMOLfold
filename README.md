@@ -9,8 +9,7 @@ Plugin for folding sequences directly in PyMOL using various models (ESM3, Boltz
 
 ### From Local Download
 1. Download the *pymolfold.zip* file from this repository.
-    - Latest package: [pymolfold_v0.4.0.zip](https://github.com/colbyford/PyMOLfold/raw/refs/heads/main/pymolfold_v0.4.0.zip)
-    - Stable release: [pymolfold_v0.3.0.zip](https://github.com/colbyford/PyMOLfold/releases/download/v0.3.0/pymolfold_v0.3.0.zip)
+    - Latest release: https://github.com/colbyford/PyMOLfold/releases/latest
 2. Open PyMOL and in the menu bar, go to *Plugin* > *Plugin Manager*.
 3. On the *Install New Plugin* tab, click the *Choose file...* button under "Install from local file".
 4. Locate the .zip file and open it.
