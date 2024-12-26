@@ -101,4 +101,4 @@ pymol ## This will open the GUI
 ## Contributing
 This PyMOL plugin is an open-source project by design. So, please fork this repository, make any changes, and submit a pull request. Also, log any feature requests or issues in the [Issues](https://github.com/colbyford/PyMOLfold/issues) section of this repo.
 
-We try to follow the [PyMOL Plugins standard](https://pymolwiki.org/index.php/Plugins_Tutorial) for the UI and functionality. (This is why we use a PyQt UI and keep all functions in one `__init__.py` file for now.)
+We try to follow the [PyMOL Plugins standard](https://pymolwiki.org/index.php/Plugins_Tutorial) for the UI and functionality. (This is why we use a [PyQt](https://riverbankcomputing.com/software/pyqt/intro) UI and keep all functions in one `__init__.py` file for now.)
