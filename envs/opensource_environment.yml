@@ -1,0 +1,17 @@
+name: pymolfold_opensource
+channels:
+  - conda-forge
+dependencies:
+- python>=3.12
+- pip
+- pymol-open-source
+- pyqt
+## Uncomment the pip and the model you'd like to install and use
+## Models can also be individually installed using pip install
+## Note: It's unlikely that you can install all models at once due to conflicting dependencies
+# - pip:
+  # - esm
+  # - boltz
+  # - chai_lab
+  # - git+https://github.com/chaidiscovery/chai-lab.git
+  # - protenix
