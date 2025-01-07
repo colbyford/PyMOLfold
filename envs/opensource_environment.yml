@@ -1,5 +1,4 @@
-# run: conda env create --file environment_macos.yml
-name: pymolfold
+name: pymolfold_opensource
 channels:
   - conda-forge
 dependencies:
