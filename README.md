@@ -75,6 +75,9 @@ pymol ## This will open the GUI
 # conda remove -n pymolfold --all
 ```
 
+> [!NOTE]
+> Note: MacOS environment will depend on the pymol-open-source package. If MacOS users are installing through conda, they should use the envs/environment_macos.yml file instead.  
+
 ## Feature Roadmap
 
 - [ ] Support for multiple protein chains (with `esm3-medium-multimer-2024-09`).
