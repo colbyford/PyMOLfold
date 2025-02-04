@@ -106,3 +106,20 @@ pymol ## This will open the GUI
 This PyMOL plugin is an open-source project by design. So, please fork this repository, make any changes, and submit a pull request. Also, log any feature requests or issues in the [Issues](https://github.com/colbyford/PyMOLfold/issues) section of this repo.
 
 We try to follow the [PyMOL Plugins standard](https://pymolwiki.org/index.php/Plugins_Tutorial) for the UI and functionality. (This is why we use a [PyQt](https://riverbankcomputing.com/software/pyqt/intro) UI and keep all functions in one `__init__.py` file for now.)
+
+## Citation
+If you use PyMOLfold in your research, consider citing our preprint:
+
+```tex
+@misc{ford2025_pymolfold,
+      title={{PyMOLfold: Interactive Protein and Ligand Structure Prediction in PyMOL}}, 
+      author={Colby T. Ford and Samee Ullah and Dinler Amaral Antunes and Tarsis Gesteira Ferreira},
+      year={2025},
+      eprint={2502.00508},
+      archivePrefix={arXiv},
+      primaryClass={q-bio.BM},
+      url={https://arxiv.org/abs/2502.00508}, 
+}
+```
+
+
