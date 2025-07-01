@@ -80,8 +80,9 @@ pymol ## This will open the GUI
 > Note: Some macOS users may need to use the `pymol-open-source` package. If you prefer/need to use the open-source version of PyMOL and wish to install through conda, modify the `envs/opensource_environment.yml` environment file. 
 
 ## Feature Roadmap
-
-- [ ] Support for multiple protein chains (with `esm3-medium-multimer-2024-09`).
+- [ ] Support for multiple protein chains (with `boltz-2`).
+- [X] Support for multiple protein chains (with `esm3-medium-multimer-2024-09`).
+    - In v0.4.1 release (Credit: @colbyford)
 - [X] Functionality for downloading existing structures from AlphaFoldDB and ModelArchive
     - In v0.4.0 release (Credit: @colbyford and @ullahsamee)
 - [X] UI updates for model-specific controls

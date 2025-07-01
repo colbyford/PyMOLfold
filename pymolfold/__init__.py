@@ -36,7 +36,7 @@ def run_plugin_gui():
 #########################
     
 ## Helper Functions
-def fix_multichain_pdb_str(pdb_str: str, split_res:str = "UNK") -> str:
+def fix_multichain_pdb_str(pdb_string:str = "", split_res:str = "UNK") -> str:
     """
     Fixes chain identifiers in a PDB string for multiple chains.
     Uses the <UNK> residue identifier to split chains.
@@ -50,7 +50,7 @@ def fix_multichain_pdb_str(pdb_str: str, split_res:str = "UNK") -> str:
 
     fixed_lines = []
     chain_idx = 0
-    for line in pdb_str.splitlines():
+    for line in pdb_string.splitlines():
         if line.startswith("ATOM") or line.startswith("HETATM"):
             residue = line[17:20]
             ## Place the ATOM in a chain
