@@ -31,8 +31,35 @@ def run_plugin_gui():
         dialog = make_dialog()
     dialog.show()
 
-
+#########################
 ## Folding Functions
+#########################
+    
+## Helper Functions
+def fix_multichain_pdb_str(pdb_string:str = "", split_res:str = "UNK") -> str:
+    """
+    Fixes chain identifiers in a PDB string for multiple chains.
+    Uses the <UNK> residue identifier to split chains.
+    Args:
+        pdb_str (str): Raw PDB output from a ESM3 multimer model
+        split_res (str): Residue identifier to split chains. Default is "UNK".
+    Returns:
+        str: PDB string with proper chain identifiers.
+    """
+    chain_ids = list(string.ascii_uppercase + string.ascii_lowercase)  # A-Z + a-z = 52 chains max
+
+    fixed_lines = []
+    chain_idx = 0
+    for line in pdb_string.splitlines():
+        if line.startswith("ATOM") or line.startswith("HETATM"):
+            residue = line[17:20]
+            ## Place the ATOM in a chain
+            line = line[:21] + chain_ids[chain_idx] + line[22:]
+            if residue == split_res:
+                chain_idx += 1
+                continue  ## Skip unknown residues
+        fixed_lines.append(line)
+    return "\n".join(fixed_lines)
 
 ## ESM Folding
 def fold_esm(model_name:str, aa_sequence:str, temperature:float=0.7, num_steps:int=8, token:str=""):
@@ -67,6 +94,10 @@ def fold_esm(model_name:str, aa_sequence:str, temperature:float=0.7, num_steps:i
     structure_prediction_chain = structure_prediction.to_protein_chain()
 
     pdb_string = structure_prediction_chain.to_pdb_string()
+
+    ## If multimer model was used, fix the chain identifiers
+    if "multimer" in model_name:
+        pdb_string = fix_multichain_pdb_str(pdb_string, split_res="UNK")
 
     ## Save the output PDB file temporarily
     with tempfile.NamedTemporaryFile(delete=False, suffix=".pdb") as temp_pdb:
