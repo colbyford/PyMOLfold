@@ -51,7 +51,8 @@ Then, to run a command in your normal terminal, simply point to the PyMOL Python
 Here are the example install commands for the supported models:
 
 - ESM3: `pip install esm`
-- Boltz-1: `pip install boltz`
+- Boltz v2.2.0: `pip install boltz[cuda] -U or git clone https://github.com/jwohlwend/boltz.git
+cd boltz; pip install -e .[cuda]`
 - Chai-1: `pip install chai_lab==0.5.0`
 - Protenix: `pip install --extra-index-url=https://pypi.nvidia.com --trusted-host pypi.nvidia.com nvidia-cublas-cu12 deepspeed==0.14.4 protenix`
 
