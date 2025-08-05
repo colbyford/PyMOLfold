@@ -1,7 +1,7 @@
 '''
 PyMOL Protein Folding Plugin
 
-By Colby T. Ford, Ph.D.
+By Colby T. Ford, Ph.D
 License: GPLv3
 '''
 
@@ -249,9 +249,20 @@ def fold_boltz(
     if os.path.exists(affinity_json_path):
         with open(affinity_json_path, 'r') as f:
             affinity_data = json.load(f)
-            affinity_results = (f"Affinity Prediction Results:\n\n"
-                                f"Predicted Affinity (log(IC50), µM): {affinity_data.get('affinity_pred_value', 'N/A')}\n"
-                                f"Binding Probability: {affinity_data.get('affinity_probability_binary', 'N/A')}")
+            y = affinity_data.get('affinity_pred_value')
+            prob = affinity_data.get('affinity_probability_binary')
+
+            kcal_mol_str = "N/A"
+            if isinstance(y, (int, float)):
+                # Convert log(IC50) to kcal/mol using the provided formula
+                kcal_mol = (6 - y) * 1.364
+                kcal_mol_str = f"{kcal_mol:.2f}"
+            
+            prob_str = f"{prob:.2f}" if isinstance(prob, (int, float)) else "N/A"
+            
+            # Format the result string to match the user's request
+            affinity_results = (f"IC50: {kcal_mol_str} kcal/mol "
+                                f"Binding Affinity Likelihood: {prob_str}")
             
     return folded_path, affinity_results
 
