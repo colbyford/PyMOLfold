@@ -1,7 +1,7 @@
 '''
 PyMOL Protein Folding Plugin
 
-By Colby T. Ford, Ph.D.
+By Colby T. Ford, Ph.D
 License: GPLv3
 '''
 
